@@ -142,4 +142,5 @@ msort xs = merge (msort ys) (msort zs)
 -- merge [4,5,6] [1,2,3]
 -- [1,2,3,4,5,6]
 
-
+myAll :: (a -> Bool) -> [a] -> Bool
+myAll p xs = and (map p xs)
