@@ -20,14 +20,14 @@ doubleSmallNumber
     then x
     else x * 2
 
--- halve xs =
---   splitAt (length xs `div` 2) xs
+halve :: Ord a => [a] -> ([a], [a])
+halve xs = splitAt (length xs `div` 2) xs
 -- halve xs =
 --   (take (n `div` 2) xs, drop (n `div` 2) xs)
 --   where n = length xs
 -- halve xs = splitAt (div (length xs) 2) xs
-halve xs = (take n xs, drop n xs)
-  where n = length xs `div` 2
+-- halve xs = (take n xs, drop n xs)
+--   where n = length xs `div` 2
 
 -- safetail (_:xs)
 --   | null xs = []
@@ -115,3 +115,31 @@ element a (h:xs) =
   else element a xs
 
 merge :: Ord a => [a] -> [a] -> [a]
+merge [] ys = ys
+merge xs [] = xs
+merge (x:xs) (y:ys) =
+  if x <= y then x : merge xs (y:ys)
+  else y : merge (x:xs) ys
+
+-- merge (4:[5,6]) (1:[2,3])
+-- (1 : merge (4:[5,6]) (2:[3]))
+-- (1 : 2 : merge (4:[5,6]) (3:[]))
+-- (1 : 2 : 3 : merge (4:[5,6]) [])
+-- (1 : 2 : 3 : [4,5,6])
+
+msort :: Ord a => [a] -> [a]
+msort [] = []
+msort [x] = [x]
+msort xs = merge (msort ys) (msort zs)
+  where (ys, zs) = halve xs
+
+-- msort [4,5,6,1,2,3]
+-- merge (msort [4,5,6]) (msort [1,2,3])
+-- merge (merge (msort [4]) (msort [5,6])) (merge msort([1]) msort( [2,3]))
+-- merge (merge [4] (merge msort([5]) msort([6]))) (merge [1] (merge msort([2]) msort([3])) )
+-- merge (merge [4] (merge [5] [6]) (merge [1] (merge [2] [3]) )
+-- merge (merge [4] [5,6]) (merge [1] [2,3] )
+-- merge [4,5,6] [1,2,3]
+-- [1,2,3,4,5,6]
+
+
