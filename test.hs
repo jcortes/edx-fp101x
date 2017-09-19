@@ -204,5 +204,3 @@ myOtherMap f = unfold null (f . head) tail
 
 myIterate :: (a -> a) -> a -> [a]
 myIterate f = unfold (const False) id f
-
--- Ex 15
