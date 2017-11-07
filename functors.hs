@@ -1,6 +1,6 @@
-import Prelude hiding (Functor, Maybe, Just, Nothing)
-
 module Book where
+
+import Prelude hiding (Functor, Maybe, Just, Nothing)
 
 inc :: [Int] -> [Int]
 inc [] = []
@@ -20,14 +20,14 @@ sqr' = map' (^2)
 class Functor f where
   fmap' :: (a -> b) -> f a -> f b
 
--- instance Functor [] where
---   -- fmap' :: (a -> b) -> [a] -> [b]
---   fmap' = map'
-
 instance Functor [] where
-  -- fmap' :: (a -> b) -> f a -> f b
-  fmap' g [] = []
-  fmap' g (x:xs) = fmap' g xs ++ [g x]
+  -- fmap' :: (a -> b) -> [a] -> [b]
+  fmap' = map'
+
+-- instance Functor [] where
+--   -- fmap' :: (a -> b) -> f a -> f b
+--   fmap' g [] = []
+--   fmap' g (x:xs) = fmap' g xs ++ [g x]
 
 data Maybe' a = Nothing | Just a
   deriving Show
@@ -47,7 +47,11 @@ instance Functor Tree where
 
 instance Functor IO where
   -- fmap' :: (a -> b) -> IO a -> IO b
-  fmap' g mx = do { x <- mx; return (g x) }
+  fmap' g mx = do {
+    x <- mx;
+    return (g x)
+  }
 
 inc'' :: Functor f => f Int -> f Int
 inc'' = fmap' (+1)
+
