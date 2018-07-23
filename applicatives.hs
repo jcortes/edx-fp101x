@@ -25,7 +25,7 @@ data CMaybe a = CNothing | CJust Int a
   deriving (Show)
 
 instance Functor CMaybe where
-  fmap f CNothing = CNothing
+  fmap f CNothing = CNothingalertasynotificaciones
   fmap f (CJust counter x) = CJust (counter+1) (f x)
 
 instance Applicative [] where
