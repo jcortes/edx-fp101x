@@ -102,17 +102,36 @@ selectNthElement (h:xs) n = selectNthElement xs (n-1)
 
 element :: Eq a => a -> [a] -> Bool
 element _ [] = False
-element a (h:xs) =
-  if h == a
-  then True
-  else element a xs
+element a (h:xs)
+  | h == a = True
+  | otherwise = element a xs
+
+myExp :: (Eq t, Num t, Num t1) => t1 -> t -> t1
+myExp m 0 = 1
+myExp m n = m * m `myExp` (n - 1)
+-- myExp 2 3
+-- 2 * (myExp 2 (3 - 1))
+-- 2 * (2 * (myExp 2 (2 - 1)))
+-- 2 * (2 * (2 * (myExp 2 (1 - 1))))
+-- 2 * (2 * (2 * 1))
+-- 8
+
+myExp2 :: (Eq t, Num t, Num t1) => t1 -> t -> t1
+myExp2 m 0 = 1
+myExp2 m n = m * myExp2 m (n - 1)
+-- myExp2 2 3
+-- 2 * myExp2 2 (3-1)
+-- 2 * 2 myExp2 2 (2-1)
+-- 2 * 2 * 2 myExp2 2 (1-1)
+-- 8
+
 
 merge :: Ord a => [a] -> [a] -> [a]
 merge [] ys = ys
 merge xs [] = xs
-merge (x:xs) (y:ys) =
-  if x <= y then x : merge xs (y:ys)
-  else y : merge (x:xs) ys
+merge (x:xs) (y:ys)
+  | x <= y = x : merge xs (y:ys)
+  | otherwise = y : merge (x:xs) ys
 
 -- merge (4:[5,6]) (1:[2,3])
 -- (1 : merge (4:[5,6]) (2:[3]))
