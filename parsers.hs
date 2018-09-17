@@ -18,13 +18,13 @@ parse p inp = p inp
 p +++ q = \inp -> case p inp of
   [] -> parse q inp
   [(v,out)] -> [(v,out)]
-
+  
+-- p' :: Parser ([(Char, String)], [(Char, String)])
 -- p' :: Parser (Char, Char)
--- p' = do
---   x <- item
---   item
---   y <- item
---   return' (x,y)
+p' = do
+      [(x:xs)] <- item
+      -- [(y:ys)] <- item xs
+      return' ('A','B')
 
 -- sat :: (Char -> Bool) -> Parser Char
 -- sat p = do 
